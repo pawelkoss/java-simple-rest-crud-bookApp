@@ -4,6 +4,7 @@ import com.example.bookstore.type.Book;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -25,31 +26,38 @@ public class BookDAOImpl implements BookStorage{
 
 
     //parser zapytań SQL dla obiektów klasy Article
-    //private SQLArticleParser sqlArticleParser;
+    //private SQLBookParser sqlBookParser;
 
     public BookDAOImpl() {
         //inicjalizacja parserów
-        //sqlArticleParser = new SQLArticleParser();
+        //sqlBookParser = new SQLBookParser();
     }
 
     public void addBook(Book book) {
-        //query = sqlArticleParser.createSaveQuery(book);
-        query = "INSERT INTO books (title, body) VALUES ('" + book.getTitle() + "', '" + book.getAuthor() +"');";
+        //query = sqlBookParser.createSaveQuery(book);
+        query = "INSERT INTO books (title, author, pagesum, yearOfPublished, publishinghouse, bookid) VALUES (?, ?, ?, ?, ?, ?);";
 
         try {
             Class.forName(DBDRIVER).newInstance();
             connection = DriverManager.getConnection(DBURL, DBUSER, DBPASS);
-            statement = connection.createStatement();
-            statement.executeUpdate(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setString(1, book.getTitle());
+            preparedStatement.setString(2, book.getAuthor());
+            preparedStatement.setInt(3, book.getPageSum());
+            preparedStatement.setInt(4, book.getYearOfPublished());
+            preparedStatement.setString(5, book.getPublishingHouse());
+            preparedStatement.setLong(6, book.getId());
+
+            preparedStatement.executeUpdate();
 
 
-            //zwolnienie zasobów i zamknięcie połączenia
-            statement.close();
+            preparedStatement.close();
             connection.close();
         } catch (InstantiationException | IllegalAccessException
                | ClassNotFoundException | SQLException e) {
             // TODO Auto-generated catch block
-            //e.printStackTrace();
+            e.printStackTrace();
             System.out.println("SQLException: " + e.getMessage());
         }
 
