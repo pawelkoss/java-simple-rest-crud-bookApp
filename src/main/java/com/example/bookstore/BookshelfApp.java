@@ -1,5 +1,6 @@
 package com.example.bookstore;
 
+import com.example.bookstore.storage.BookStorage;
 import fi.iki.elonen.NanoHTTPD;
 
 import java.io.IOException;
@@ -12,9 +13,13 @@ class BookshelfApp extends NanoHTTPD {
         super(port);
         start(5000, false);
         System.out.println("Server has been started");
+        System.out.println();
     }
 
     public static void main(String[] args) {
+
+        BookStorage bookStorage;
+
         try{
             new BookshelfApp(8080);
         } catch (IOException e){

@@ -11,28 +11,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ArticleDAOImpl implements BookStorage{
+public class BookDAOImpl implements BookStorage{
 
-    private final static String DBURL = "jdbc:mysql://localhost/db_art?serverTimezone=UTC&useSSL=False";
-    private final static String DBUSER = "root";
-    private final static String DBPASS = "123456";
-    private final static String DBDRIVER = "com.mysql.cj.jdbc.Driver";
+    private final static String DBURL = "jdbc:postgresql://localhost:5432/test";
+    private final static String DBUSER = "postgres";
+    private final static String DBPASS = "785436";
+    private final static String DBDRIVER = "org.postgresql.Driver";
 
-    //obiekt tworzący połączenie z bazą danych.
+
     private Connection connection;
-    //obiekt pozwalający tworzyć nowe wyrażenia SQL
     private Statement statement;
-    //zapytanie SQL
     private String query;
+
+
     //parser zapytań SQL dla obiektów klasy Article
     //private SQLArticleParser sqlArticleParser;
 
-    public ArticleDAOImpl() {
+    public BookDAOImpl() {
         //inicjalizacja parserów
         //sqlArticleParser = new SQLArticleParser();
     }
 
-    public void save(Book book) {
+    public void addBook(Book book) {
         //query = sqlArticleParser.createSaveQuery(article);
         query = "INSERT INTO article (title, body) VALUES ('" + book.getTitle() + "', '" + book.getAuthor() +"');";
 
@@ -55,9 +55,15 @@ public class ArticleDAOImpl implements BookStorage{
 
 
     }
-    public void getAllBooks() {
-        List<Book> books = new ArrayList<>();
-        query = "Select * FROM article";
+
+    @Override
+    public Book getBook(long id) {
+        return null;
+    }
+
+    public List<Book> getAllBooks() {
+        List<Book> bookstorage = new ArrayList<>();
+        query = "Select * FROM books";
 
         try {
             Class.forName(DBDRIVER).newInstance();
@@ -67,7 +73,9 @@ public class ArticleDAOImpl implements BookStorage{
             ResultSet rs = statement.executeQuery(query);
 
             while (rs.next()) {
-                booksFromDB(rs);
+
+                Book book = bookFromDB(rs);
+                bookstorage.add(book);
             }
 
 
@@ -81,22 +89,24 @@ public class ArticleDAOImpl implements BookStorage{
             System.out.println("SQLException: " + e.getMessage());
         }
 
+        return bookstorage;
 
     }
-    private static String dataFromDB;
-    private static void booksFromDB(ResultSet rs){
+
+    private static Book bookFromDB(ResultSet rs){
+        Book book = new Book();
         try{
-            dataFromDB = rs.getString(1);
-            System.out.println("\n" + dataFromDB + " ");
-            dataFromDB = rs.getString(2);
-            System.out.println(dataFromDB + " ");
-            dataFromDB = rs.getString(3);
-            System.out.println(dataFromDB);
-            dataFromDB = rs.getString(4);
-            System.out.println(dataFromDB);
+            book.setId(rs.getLong(7));
+            book.setTitle(rs.getString(2));
+            book.setAuthor(rs.getString(3));
+            book.setPageSum(rs.getInt(4));
+            book.setYearOfPublished(rs.getInt(5));
+            book.setPublishingHouse(rs.getString(6));
 
         }catch(SQLException e) {
             e.printStackTrace();
         }
+
+        return book;
     }
 }

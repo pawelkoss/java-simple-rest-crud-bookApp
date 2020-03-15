@@ -6,7 +6,7 @@ import com.example.bookstore.type.Book;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StaticListBookStorageImpl implements BookStorage {
+public class StaticListBookStorageImpl {
 
     private static List<Book> bookstorage = new ArrayList<Book>();
 

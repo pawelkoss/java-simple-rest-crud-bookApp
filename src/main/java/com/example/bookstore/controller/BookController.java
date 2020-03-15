@@ -22,7 +22,7 @@ public class BookController {
 
     private final static String BOOK_ID_PARAM_NAME = "bookId";
 
-    private BookStorage bookStorage = new StaticListBookStorageImpl();
+    public BookStorage bookStorage;
     public Response serveGetBookRequest(NanoHTTPD.IHTTPSession session){
 
 
