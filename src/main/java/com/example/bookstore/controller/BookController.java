@@ -1,5 +1,6 @@
 package com.example.bookstore.controller;
 
+import com.example.bookstore.storage.BookDAOImpl;
 import com.example.bookstore.storage.BookStorage;
 import com.example.bookstore.storage.impl.StaticListBookStorageImpl;
 
@@ -22,7 +23,7 @@ public class BookController {
 
     private final static String BOOK_ID_PARAM_NAME = "bookId";
 
-    public BookStorage bookStorage;
+    public BookStorage bookStorage = new BookDAOImpl();
     public Response serveGetBookRequest(NanoHTTPD.IHTTPSession session){
 
 

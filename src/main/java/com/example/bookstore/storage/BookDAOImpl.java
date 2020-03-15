@@ -85,7 +85,7 @@ public class BookDAOImpl implements BookStorage{
         } catch (InstantiationException | IllegalAccessException
                 | ClassNotFoundException | SQLException e) {
             // TODO Auto-generated catch block
-            //e.printStackTrace();
+            e.printStackTrace();
             System.out.println("SQLException: " + e.getMessage());
         }
 
