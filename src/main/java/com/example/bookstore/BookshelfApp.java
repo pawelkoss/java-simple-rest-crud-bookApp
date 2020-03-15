@@ -1,4 +1,4 @@
-package com.example.bookshelf;
+package com.example.bookstore;
 
 import fi.iki.elonen.NanoHTTPD;
 

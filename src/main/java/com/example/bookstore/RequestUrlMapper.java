@@ -1,6 +1,6 @@
-package com.example.bookshelf;
+package com.example.bookstore;
 
-import com.example.bookshelf.controller.BookController;
+import com.example.bookstore.controller.BookController;
 import fi.iki.elonen.NanoHTTPD;
 import fi.iki.elonen.NanoHTTPD.IHTTPSession;
 

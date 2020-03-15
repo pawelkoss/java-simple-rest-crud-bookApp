@@ -1,7 +1,7 @@
-package com.example.bookshelf.storage.impl;
+package com.example.bookstore.storage.impl;
 
-import com.example.bookshelf.storage.BookStorage;
-import com.example.bookshelf.type.Book;
+import com.example.bookstore.storage.BookStorage;
+import com.example.bookstore.type.Book;
 
 import java.util.ArrayList;
 import java.util.List;

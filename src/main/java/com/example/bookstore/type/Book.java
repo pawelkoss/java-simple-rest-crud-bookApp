@@ -1,4 +1,4 @@
-package com.example.bookshelf.type;
+package com.example.bookstore.type;
 
 public class Book {
     private long id;
