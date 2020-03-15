@@ -24,17 +24,10 @@ public class BookDAOImpl implements BookStorage{
     private Statement statement;
     private String query;
 
-
-    //parser zapytań SQL dla obiektów klasy Article
-    //private SQLBookParser sqlBookParser;
-
-    public BookDAOImpl() {
-        //inicjalizacja parserów
-        //sqlBookParser = new SQLBookParser();
-    }
+    public BookDAOImpl() { }
 
     public void addBook(Book book) {
-        //query = sqlBookParser.createSaveQuery(book);
+
         query = "INSERT INTO books (title, author, pagesum, yearOfPublished, publishinghouse, bookid) VALUES (?, ?, ?, ?, ?, ?);";
 
         try {
@@ -82,7 +75,6 @@ public class BookDAOImpl implements BookStorage{
             connection.close();
         } catch (InstantiationException | IllegalAccessException
                 | ClassNotFoundException | SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             System.out.println("SQLException: " + e.getMessage());
         }
@@ -105,14 +97,10 @@ public class BookDAOImpl implements BookStorage{
                 Book book = bookFromDB(rs);
                 bookList.add(book);
             }
-
-
-            //zwolnienie zasobów i zamknięcie połączenia
             statement.close();
             connection.close();
         } catch (InstantiationException | IllegalAccessException
                 | ClassNotFoundException | SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             System.out.println("SQLException: " + e.getMessage());
         }

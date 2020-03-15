@@ -2,17 +2,13 @@ package com.example.bookstore.controller;
 
 import com.example.bookstore.storage.BookDAOImpl;
 import com.example.bookstore.storage.BookStorage;
-import com.example.bookstore.storage.impl.StaticListBookStorageImpl;
-
 import com.example.bookstore.type.Book;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fi.iki.elonen.NanoHTTPD;
 import fi.iki.elonen.NanoHTTPD.Response;
-
 import java.util.List;
 import java.util.Map;
-
 import static fi.iki.elonen.NanoHTTPD.Response.Status.BAD_REQUEST;
 import static fi.iki.elonen.NanoHTTPD.Response.Status.INTERNAL_ERROR;
 import static fi.iki.elonen.NanoHTTPD.Response.Status.NOT_FOUND;
