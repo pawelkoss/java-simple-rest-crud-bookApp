@@ -33,8 +33,8 @@ public class BookDAOImpl implements BookStorage{
     }
 
     public void addBook(Book book) {
-        //query = sqlArticleParser.createSaveQuery(article);
-        query = "INSERT INTO article (title, body) VALUES ('" + book.getTitle() + "', '" + book.getAuthor() +"');";
+        //query = sqlArticleParser.createSaveQuery(book);
+        query = "INSERT INTO books (title, body) VALUES ('" + book.getTitle() + "', '" + book.getAuthor() +"');";
 
         try {
             Class.forName(DBDRIVER).newInstance();
@@ -58,11 +58,31 @@ public class BookDAOImpl implements BookStorage{
 
     @Override
     public Book getBook(long id) {
-        return null;
+        query = "Select * FROM books WHERE bookid='"+id+"'";
+        Book book = new Book();
+        try {
+            Class.forName(DBDRIVER).newInstance();
+            connection = DriverManager.getConnection(DBURL, DBUSER, DBPASS);
+            statement = connection.createStatement();
+
+            ResultSet rs = statement.executeQuery(query);
+
+            rs.next();
+            book = bookFromDB(rs);
+
+            statement.close();
+            connection.close();
+        } catch (InstantiationException | IllegalAccessException
+                | ClassNotFoundException | SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            System.out.println("SQLException: " + e.getMessage());
+        }
+        return book;
     }
 
     public List<Book> getAllBooks() {
-        List<Book> bookstorage = new ArrayList<>();
+        List<Book> bookList = new ArrayList<>();
         query = "Select * FROM books";
 
         try {
@@ -75,7 +95,7 @@ public class BookDAOImpl implements BookStorage{
             while (rs.next()) {
 
                 Book book = bookFromDB(rs);
-                bookstorage.add(book);
+                bookList.add(book);
             }
 
 
@@ -89,7 +109,7 @@ public class BookDAOImpl implements BookStorage{
             System.out.println("SQLException: " + e.getMessage());
         }
 
-        return bookstorage;
+        return bookList;
 
     }
 
